@@ -71,11 +71,10 @@
 
                 closure=$(${pkgs.coreutils}/bin/readlink -f /run/current-system)
                 echo "Activated $host. Pushing the closure as the invoking user."
-                # The calling shell may predate activation of the new fnox config.
-                config_file="''${XDG_CONFIG_HOME:-$HOME/.config}/fnox/config.toml"
-                CACHIX_AUTH_TOKEN=$(${pkgs.fnox}/bin/fnox -c "$config_file" get CACHIX_AUTH_TOKEN)
-                export CACHIX_AUTH_TOKEN
-                exec ${pkgs.cachix}/bin/cachix push thehuman "$closure"
+                # useUserPackages installs the freshly activated runner here,
+                # even if the invoking shell predates this generation.
+                exec /etc/profiles/per-user/${username}/bin/doppler-home-run \
+                  --only-secrets CACHIX_AUTH_TOKEN -- ${pkgs.cachix}/bin/cachix push thehuman "$closure"
               '';
             };
           in {

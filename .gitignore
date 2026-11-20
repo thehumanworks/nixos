@@ -1,4 +1,5 @@
 .DS_Store
+.doppler/
 .env
 .env.*
 !.env.example

@@ -13,7 +13,7 @@
     ./modules/agents/mcp.nix
 
     # secret modules
-    ./modules/secrets/fnox.nix
+    ./modules/secrets/doppler.nix
 
     # shell modules
     ./modules/shell.nix
@@ -23,6 +23,24 @@
     inputs.nixvim.homeModules.nixvim
     ./modules/tools/neovim.nix
   ];
+
+  programs.doppler = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    project = "global";
+    config = "dev";
+    # Set project and config here to pin them across hosts. Otherwise use
+    # the selection made with: doppler setup --scope "$HOME"
+    exportOnly = [
+      "EXA_API_KEY"
+      "CLAUDE_CODE_OAUTH_TOKEN"
+      "GITHUB_HOST"
+      "GITHUB_TOKEN"
+      "GITHUB_ENTERPRISE_HOST"
+      "GITHUB_ENTERPRISE_TOKEN"
+    ];
+  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

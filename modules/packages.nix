@@ -8,7 +8,8 @@ let
       pkgs.home-manager
     ];
     text = ''
-      exec cachix watch-exec thehuman -- \
+      exec ${lib.escapeShellArg "${config.home.profileDirectory}/bin/doppler-home-run"} \
+        --only-secrets CACHIX_AUTH_TOKEN -- cachix watch-exec thehuman -- \
         ${pkgs.coreutils}/bin/env -u CACHIX_AUTH_TOKEN home-manager switch \
           --flake ${lib.escapeShellArg "${config.xdg.configHome}/home-manager"} \
           -b backup
