@@ -1,0 +1,13 @@
+{
+  programs.mcp = {
+    enable = true;
+    servers = {
+      exa = {
+        url = "https://mcp.exa.ai/mcp";
+        headers = {
+          Authorization = "Bearer \${EXA_API_KEY}";
+        };
+      };
+    };
+  };
+}
